@@ -97,3 +97,25 @@ def get_all_products():
     results = [dict(row) for row in rows]
     return results
 
+
+def get_order_by_hours():
+    query = """SELECT order_hour_of_day, COUNT(*) as count
+    FROM `cmpe-274-381208.instacart.orders`
+    GROUP BY order_hour_of_day
+    ORDER BY order_hour_of_day"""
+    rows = client.query(query).result()
+    results = [dict(row) for row in rows]
+    return results
+
+
+def get_orders_by_day_of_the_week():
+    query = """SELECT order_dow, COUNT(*) as count
+    FROM `cmpe-274-381208.instacart.orders`
+    GROUP BY order_dow
+    ORDER BY order_dow"""
+    rows = client.query(query).result()
+    results = [dict(row) for row in rows]
+    return results
+
+
+

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app
 from database.get_data import get_user_by_email
 from database.get_data import get_top_products
-from database.get_data import get_reorders, get_pred, get_all_products
+from database.get_data import get_reorders, get_pred, get_all_products, get_order_by_hours, get_orders_by_day_of_the_week
 import jwt
 
 dashboard_blueprint = Blueprint('dashboard', __name__)
@@ -49,5 +49,21 @@ def prods():
     token = request.headers.get('Authorization')
     payload = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
     data = get_all_products()
+    return jsonify({'data': data, 'status': 200})
+
+
+@dashboard_blueprint.route('/get-orders-by-hour', methods=["GET"])
+def api_get_order_by_hours():
+    token = request.headers.get('Authorization')
+    payload = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
+    data = get_order_by_hours()
+    return jsonify({'data': data, 'status': 200})
+
+
+@dashboard_blueprint.route('/get-orders-by-week', methods=["GET"])
+def some_api():
+    token = request.headers.get('Authorization')
+    payload = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
+    data = get_orders_by_day_of_the_week()
     return jsonify({'data': data, 'status': 200})
 
